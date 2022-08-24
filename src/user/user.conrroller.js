@@ -1,6 +1,6 @@
 const express = require("express");
-const { userCreate, getNewsById, updateUsers, updatePatchUsers, deleteUsers, getAllNews } = require("./user.servise")
-const { validateStudent } = require("../helper/validate")
+const { userCreate, getNewsById, updateUsers, deleteUsers, getAllNews, patchUsers } = require("./user.servise")
+const { validateStudent, validatePatch } = require("../helper/validate")
 
 const router = express.Router();
 
@@ -45,20 +45,20 @@ router.put("/:id/:infoID", validateStudent, async (req, res) => {
     }
 });
 
-router.patch("/:id/:infoID", validateStudent, async (req, res) => {
+router.delete("/:id/:infoID", async (req, res) => {
     try {
         const { id, infoID } = req.params;
-        const updatedUsers = await updatePatchUsers(id, infoID, req.body);
-        res.status(200).send(updatedUsers);
+        const deletedUsers = await deleteUsers(id, infoID);
+        res.status(200).send(deletedUsers);
     } catch (error) {
         res.status(404).send(error.message);
     }
 });
 
-router.delete("/:id", async (req, res) => {
+router.patch("/:id/:infoID", validatePatch, async (req, res) => {
     try {
-        const { id } = req.params;
-        const updatedUsers = await deleteUsers(id);
+        const { id, infoID } = req.params;
+        const updatedUsers = await patchUsers(id, infoID, req.body);
         res.status(200).send(updatedUsers);
     } catch (error) {
         res.status(404).send(error.message);

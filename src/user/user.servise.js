@@ -1,4 +1,4 @@
-const { userCreateDB, getNewsByIdDB, getUsersDB, updateUsersDB, updatePatchUsersDB, deleteUsersDB } = require("./user.repository")
+const { userCreateDB, getNewsByIdDB, getUsersDB, updateUsersDB, deleteUsersDB, patchUsersDB } = require("./user.repository")
 
 const userCreate = async (name, surname, birth, city, age) => {
     const userCreatedDB = await userCreateDB(name, surname, birth, city, age);
@@ -20,16 +20,14 @@ const updateUsers = async (id, infoID, name, surname, birth, city, age) => {
     return updatedUsersDB;
 }
 
-const updatePatchUsers = async (id, infoID, obj) => {
-    const updatedUsersDB = await updatePatchUsersDB(id, infoID, obj);
-
-    if (!updatedUsersDB.length) throw new Error('Not Found student');
+const deleteUsers = async (id, infoID) => {
+    const updatedUsersDB = await deleteUsersDB(id, infoID);
     return updatedUsersDB;
 }
 
-const deleteUsers = async (id) => {
-    const updatedUsersDB = await deleteUsersDB(id);
+const patchUsers = async (id, infoID, obj) => {
+    const updatedUsersDB = await patchUsersDB(id, infoID, obj);
     return updatedUsersDB;
 }
 
-module.exports = { userCreate, updateUsers, updatePatchUsers, deleteUsers, getNewsById, getAllNews }
+module.exports = { userCreate, updateUsers, deleteUsers, getNewsById, getAllNews, patchUsers }

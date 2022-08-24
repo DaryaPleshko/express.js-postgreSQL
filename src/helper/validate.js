@@ -5,4 +5,10 @@ const validateStudent = (req, res, next) => {
     next()
 }
 
-module.exports = { validateStudent }
+const validatePatch = (req, res, next) => {
+    const { birth } = req.body;
+    if (!/^[\d{4}\-\d{2}\-\d{2}]/g.test(birth)) throw new Error('Некорректный ввод');
+    next()
+}
+
+module.exports = { validateStudent, validatePatch }

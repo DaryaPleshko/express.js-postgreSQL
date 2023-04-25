@@ -1,9 +1,8 @@
 const express = require("express");
-const { userCreate, getNewsById, updateUsers, deleteUsers, getAllNews, patchUsers } = require("./user.servise")
-const { validateStudent, validatePatch } = require("../helper/validate")
+const { userCreate, getNewsById, updateUsers, deleteUsers, getAllNews, patchUsers } = require("./user.servise");
+const { validateStudent, validatePatch } = require("../helper/validate");
 
 const router = express.Router();
-
 
 router.post("/", async (req, res) => {
     try {
@@ -65,4 +64,4 @@ router.patch("/:id/:infoID", validatePatch, async (req, res) => {
     }
 })
 
-module.exports = router
+module.exports = router;

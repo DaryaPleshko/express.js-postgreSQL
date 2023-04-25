@@ -7,7 +7,7 @@ const userCreateDB = async (name, surname, birth, city, age) => {
     const objInfo = (await connect.query(sqlInfo, [birth, city, age])).rows[0];
 
     const sqlStudents = `INSERT into students (name, surname, info_id)
-    VALUES ($1, $2, $3)  RETURNING students.*`
+    VALUES ($1, $2, $3)  RETURNING students.*`;
     const objStudents = (await connect.query(sqlStudents, [name, surname, objInfo.id])).rows;
     return objStudents;
 }
@@ -20,7 +20,6 @@ const getNewsByIdDB = async (id) => {
     JOIN students_info as i ON i.id = s.id 
     where s.id = $1`;
     const obj = (await connect.query(sql, [id])).rows;
-    console.log(obj)
     return obj;
 }
 
@@ -54,9 +53,8 @@ const updateUsersDB = async (id, infoID, name, surname, birth, city, age) => {
         console.log('EXCEPTION IN updateUsersDB');
         await connect.query('ROLLBACK');
     } finally {
-        connect.release()
+        connect.release();
     }
-
 }
 
 const deleteUsersDB = async (id, infoID) => {
